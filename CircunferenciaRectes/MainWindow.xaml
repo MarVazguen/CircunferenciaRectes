@@ -1,0 +1,155 @@
+﻿<Window 
+        x:Class="CircunferenciaRectes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Icon="Fotos/MainIcon.png"
+        Title="ArcsCircumferència "  Height="690" Width="978">
+    <Grid  Background="LightCyan">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="13*"/>
+        </Grid.RowDefinitions>
+        <!---Header-->
+        <Grid  x:Name="panelHeader"    Background="DarkBlue"  Grid.Row="0"     Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+                <TextBlock Name="tbTitol"  DockPanel.Dock="Left"   Style="{StaticResource FontStyleTitol}"     Grid.Column="0" Grid.ColumnSpan="2">
+                    <TextBlock.Triggers>
+                        <EventTrigger RoutedEvent="TextBlock.MouseEnter">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation 
+                                            Storyboard.TargetProperty="Width"
+                                            To="20" Duration="0:0:1.5">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ElasticEase EasingMode="EaseOut" Oscillations="10" Springiness="10"></ElasticEase>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+
+                        <EventTrigger RoutedEvent="TextBlock.MouseLeave">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation 
+                                           Storyboard.TargetProperty="Width"
+                                           Duration="0:0:3">
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </TextBlock.Triggers>
+                </TextBlock>
+            <Button Margin="0,0,30,0"  DockPanel.Dock="Right"  Content="{StaticResource strGenerar}"   Style="{StaticResource FontSizeButtonGenerar}" x:Name="btnGenerar" Click="btnGenerar_Click" Grid.Column="3" />
+
+        </Grid>
+        <!--Region Slider bar-->
+
+        <StackPanel x:Name="sidePanel" Background="#FF0F4E7A"   Grid.Column="0" Grid.RowSpan="2" Grid.Row="1">
+
+            <StackPanel  Background="#FF0F4E7A" >
+                <TextBlock  Foreground="Black" FontFamily="Comic Sans MS"  x:Name="tbConfiguracio"  FontSize="45" HorizontalAlignment="Center" VerticalAlignment="Top" Text="{StaticResource strTextConfiguracio}" Margin="0,35,0,35"   /> 
+            </StackPanel>
+            <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible"  Name="listBoxMenu" >
+
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type Expander}">
+                        <Setter Property="IsExpanded"
+                                   Value="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"/>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.Template>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ItemsPresenter/>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <ContentPresenter Content="{TemplateBinding Content}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <Expander Background="DarkOrange" Margin="0,0,0,20" Loaded="Expander_Loaded" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <Expander.Header>
+                        <BulletDecorator>
+                            <BulletDecorator.Bullet>
+                                <Image Source="Fotos/Configuracion.png" Width="63" Height="63" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            </BulletDecorator.Bullet>
+                            <TextBlock FontSize="20" Margin="10,0,0,0"   Text="{StaticResource strTextConfiguracion}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Foreground="White" />
+                        </BulletDecorator>
+                    </Expander.Header>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid  Name="grdAjustes">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                <TextBlock FontSize="20" Background="DarkOrange" HorizontalAlignment="Center"  Foreground="Black">Nombre de cuadrantes</TextBlock>
+                                <WrapPanel >
+                                    <Button Style="{StaticResource StyleButtonMenu}" Name="btnCantonadaUpLeft" Click="btnEsquerra_Click">I</Button>
+                                    <Button Style="{StaticResource StyleButtonMenu}" Name="btnCantonadaUpRight" Click="btnDreta_Click">II</Button>
+                                    <Button Style="{StaticResource StyleButtonMenu}" Name="btnContonadaDownLeft" Click="btnAdalt_Click">III</Button>
+                                    <Button Style="{StaticResource StyleButtonMenu}" Name="btnCantonadaDownRight" Click="btnAbaix_Click">IV</Button>
+                                </WrapPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Grid.Column="0"  Margin="5" Grid.Row="1">
+                                <TextBlock  Text="{StaticResource strTextColorLines}" Style="{StaticResource tbBackgroundGray}"/>
+                                <TextBlock  Text="{StaticResource strTextCostesMeitatSencer}"  Style="{StaticResource tbBackgroundLightGray}"/>
+                                <TextBlock  Text="{StaticResource strTextNumeroLines}" Style="{StaticResource tbBackgroundGray}"/>
+                                <TextBlock  Text="{StaticResource strTextDibuixar}" Style="{StaticResource tbBackgroundLightGray}"/>
+                                <TextBlock  Text="{StaticResource strTextTempsPerDibuixa}" Style="{StaticResource tbBackgroundGray}" />
+                                <TextBlock  Text="{StaticResource strTextGrosor}" Style="{StaticResource tbBackgroundLightGray}"/>
+                                 
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5" Grid.Row="1">
+                                <xctk:ColorPicker x:Name="clrPickerLine" FontSize="17" SelectedColor="White" SelectedColorChanged="clrPickerLine_SelectedColorChanged"/>
+                                <CheckBox Style="{StaticResource CheckBoxStyle1}" Margin="0,6,0,5" Name="cbxSencerMeitat"/>
+                                <xctk:IntegerUpDown x:Name="integerUpdDownNLinies" Margin="0,1,0,7"  FontSize="18" Minimum="1" Maximum="100" Value="5" Increment="3"/>
+                                <ComboBox SelectedIndex="0"  Text="Un per un"  Name="cbbxVelocitat_al_dibuixar" Background="White" VerticalAlignment="Center" Margin="0,0,0,7">
+                                    <TextBlock Text="Al mateix temps" Name="tbcbbx_Al_mateix_temps" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Un per un" Name="tbcbbx_Al_un_per_un" HorizontalAlignment="Center"/>
+                                </ComboBox>
+                                <xctk:IntegerUpDown x:Name="integerUpdDownNTemps" FontSize="18" Minimum="1" Maximum="10" Value="1" Increment="2"/>
+                                <xctk:IntegerUpDown Margin="0,5,0,0"  x:Name="integerUpdDownNGrosor" ValueChanged="integerUpdDownNGrosor_ValueChanged" FontSize="18" Minimum="1" Maximum="10" Value="4" Increment="1"/>
+
+                            </StackPanel>
+
+                        </Grid>
+                    </ScrollViewer>
+                </Expander>
+            </ListBox>
+            <TextBlock  Style="{StaticResource tbError}" Visibility="Hidden" Name="tbErrorTrobat"></TextBlock>
+        </StackPanel> 
+
+        <!---Region CANVAS-->
+        <Viewbox Grid.Row="1" Grid.Column="1" > 
+            <Canvas   Margin="20" Background="DeepSkyBlue" MinHeight="1000" MinWidth="1000"    Name="cnvTauler" SizeChanged="cnvTauler_SizeChanged" MouseRightButtonDown="cnvTauler_MouseRightButtonDown"/>
+        </Viewbox>
+    </Grid>
+</Window>
