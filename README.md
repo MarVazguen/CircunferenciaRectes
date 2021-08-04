@@ -1,4 +1,4 @@
-# CircunferenciaRectes
+# Circunferencia Rectes
 Aplicacion GUI , animacion grafica
 
 Captura de pantalla
